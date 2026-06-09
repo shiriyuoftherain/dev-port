@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onnett Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08142a;
+      --surface: #111F3B;
+      --surface-soft: #0F1932;
+      --border: rgba(255, 255, 255, 0.14);
+      --bdr-hover: rgba(255, 255, 255, 0.44);
+      --blue: #B4B7BE;
+      --blue-soft: rgba(255, 255, 255, 0.08);
+      --text: #F7F9FF;
+      --muted: #B1B5BF;
+      --accent: #D3D7DD;
+      --accent-dim: rgba(255, 255, 255, 0.10);
+      --shadow: 0 28px 62px rgba(0, 0, 0, 0.30);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: linear-gradient(rgba(2, 8, 20, 0.72), rgba(2, 8, 20, 0.72)), url('assets/backgrounds/bg.png') center/cover no-repeat;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-shadow: 0 0 1px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.25);
+      cursor: default;
+    }
+    a, button { cursor: pointer; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(6, 16, 34, 0.88);
+      backdrop-filter: blur(14px);
+    }
+    .nav-name {
+      font-family: 'Cinzel', serif;
+      font-weight: 600; font-size: 18px;
+      color: var(--text); text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    .nav-roblox {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text); text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 14px; border-radius: 0;
+      background: rgba(10, 18, 34, 0.92);
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .nav-roblox:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      color: var(--text);
+      background: rgba(16, 28, 52, 0.95);
+      transform: translateY(-1px);
+    }
+    .nav-roblox .roblox-icon,
+    .nav-discord .discord-icon {
+      width: 26px; height: 26px; flex-shrink: 0;
+      border-radius: 0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      overflow: hidden;
+    }
+    .nav-roblox .roblox-icon img,
+    .nav-discord .discord-icon img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .nav-discord {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 14px; border-radius: 0;
+      background: rgba(10, 18, 34, 0.92);
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .nav-discord:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(21, 33, 61, 0.95);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1100px; margin: 0 auto 40px;
+      padding: 96px 40px 56px;
+      background: rgba(6, 14, 29, 0.84);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 30px 88px rgba(0, 0, 0, 0.20);
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .hero-name {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: clamp(56px, 9vw, 96px); line-height: 1;
+      letter-spacing: -0.04em; margin-bottom: 6px;
+      color: var(--text);
+      text-shadow: 0 1px 2px rgba(10, 26, 55, 0.20);
+    }
+    .hero-line {
+      width: min(420px, 80%);
+      max-width: 380px;
+      margin: 2px 0 6px 0;
+      display: block;
+      height: auto;
+      filter: brightness(1.1);
+    }
+    .hero-sub {
+      font-size: 18px; font-weight: 400; color: var(--muted);
+      max-width: 520px; line-height: 1.65;
+    }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 48px 40px; }
+    .section-header {
+      display: flex; align-items: center; gap: 6px; margin-bottom: 20px;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); white-space: nowrap;
+    }
+    .section-line {
+      flex: 1;
+      height: 22px;
+      background: url('assets/deco/DecorationLine2.png') left center/contain no-repeat;
+      min-width: 40px;
+    }
+
+    .star-field {
+      position: fixed !important;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      transform: none;
+      translate: none;
+    }
+    .page-content {
+      position: relative;
+      z-index: 1;
+    }
+    .star {
+      position: absolute;
+      opacity: 0.92;
+      will-change: transform, opacity;
+      animation: starMotion var(--star-duration) ease-in-out infinite;
+      animation-delay: var(--star-delay);
+    }
+    .star img { width: 100%; height: 100%; display: block; }
+    @keyframes starMotion {
+      0%   { transform: translateY(0) rotate(var(--star-start-rotation)) scale(var(--star-scale-min)); }
+      50%  { transform: translateY(calc(var(--star-float-distance) * -1)) rotate(calc(var(--star-start-rotation) + 180deg)) scale(var(--star-scale-max)); }
+      100% { transform: translateY(0) rotate(calc(var(--star-start-rotation) + 360deg)) scale(var(--star-scale-min)); }
+    }
+
+    .games-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    a.game-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px; min-width: 220px;
+      background: #0D1A2D;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0; text-decoration: none;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    a.game-card:hover {
+      background: rgba(18, 30, 50, 0.96);
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.50);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.20);
+    }
+    .games-row a.game-card.highlight {
+      position: relative;
+      border-color: rgba(120, 255, 155, 0.35);
+      box-shadow: 0 0 0 1px rgba(120, 255, 155, 0.10), 0 24px 56px rgba(0, 0, 0, 0.22);
+    }
+    .games-row a.game-card.highlight::before,
+    .games-row a.game-card.highlight::after {
+      content: '';
+      position: absolute;
+      background: rgba(120, 255, 155, 0.95);
+      box-shadow: 0 0 18px rgba(120, 255, 155, 0.35);
+    }
+    .games-row a.game-card.highlight::before { top: 0; left: 0; width: 40px; height: 3px; }
+    .games-row a.game-card.highlight::after  { top: 0; left: 0; width: 3px; height: 40px; }
+
+    .game-icon {
+      width: 52px; height: 52px; border-radius: 0;
+      overflow: hidden; flex-shrink: 0; background: #0D1A35;
+      display: grid; place-items: center;
+    }
+    .game-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .game-name {
+      font-family: 'Cinzel', serif;
+      font-size: 15px; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .game-role { font-size: 11px; color: var(--accent); margin-top: 2px; }
+
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; align-items: center; }
+    .filter-btn {
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; padding: 8px 18px; border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(9, 20, 41, 0.85); color: var(--text);
+      cursor: pointer; user-select: none;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .filter-btn:hover  { border-color: rgba(255, 255, 255, 0.44); background: rgba(255, 255, 255, 0.10); }
+    .filter-btn.active { border-color: rgba(255, 255, 255, 0.50); background: rgba(255, 255, 255, 0.12); }
+    .clear-btn {
+      font-family: 'Inter', sans-serif; font-size: 12px; color: var(--muted);
+      background: none; border: none; cursor: pointer;
+      padding: 7px 8px; margin-left: 4px; display: none; transition: color 0.18s;
+    }
+    .clear-btn:hover { color: var(--text); }
+    .clear-btn.visible { display: block; }
+
+    .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+    .card {
+      background: #0D1B34;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0; overflow: hidden;
+      box-shadow: 0 24px 62px rgba(0, 0, 0, 0.22);
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .card:hover { border-color: rgba(255, 255, 255, 0.18); box-shadow: 0 24px 56px rgba(0, 0, 0, 0.20); }
+    .card.is-hidden { display: none; }
+
+    .card-media {
+      width: 100%; aspect-ratio: 16/9; background: #0B1730;
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .card-media img, .card-media video, .card-media iframe {
+      width: 100%; height: 100%; object-fit: cover; display: block; border: none;
+    }
+    .card-media.media-clickable { cursor: zoom-in; position: relative; }
+    .card-media.media-clickable video { cursor: default; }
+    .card-media.media-clickable::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.20);
+      opacity: 0; transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .card-media.media-clickable:hover::after { opacity: 1; }
+
+    .play-button {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; z-index: 10;
+      opacity: 1; transition: opacity 0.2s ease;
+    }
+    .play-button::before {
+      content: '';
+      width: 56px; height: 56px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.40);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .play-button::after {
+      content: '▶';
+      position: absolute;
+      font-size: 20px; color: #0B1730;
+      margin-left: 4px; font-weight: 900;
+    }
+    .card-media.media-clickable:hover .play-button::before {
+      transform: scale(1.12);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.50);
+    }
+
+    .pause-button {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; z-index: 10;
+      opacity: 0; transition: opacity 0.2s ease;
+    }
+    .pause-button::before {
+      content: '';
+      width: 56px; height: 56px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.40);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pause-button::after {
+      content: '⏸';
+      position: absolute;
+      font-size: 18px; color: #0B1730; font-weight: 900;
+    }
+    .card-media.media-clickable:hover .pause-button::before {
+      transform: scale(1.12);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.50);
+    }
+
+    .fullscreen-button {
+      position: absolute; bottom: 12px; right: 12px;
+      width: 42px; height: 42px;
+      background: rgba(0, 0, 0, 0.50);
+      border: 1px solid rgba(255, 255, 255, 0.30);
+      border-radius: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, background 0.2s, border-color 0.2s;
+      cursor: pointer; z-index: 10;
+      font-size: 18px; color: rgba(255, 255, 255, 0.92);
+    }
+    .fullscreen-button::before { content: '⛶'; }
+    .fullscreen-button:hover {
+      background: rgba(0, 0, 0, 0.70);
+      border-color: rgba(255, 255, 255, 0.50);
+    }
+
+    .media-viewer {
+      position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+      background: rgba(5, 12, 26, 0.86); z-index: 200; padding: 24px;
+    }
+    .media-viewer.active { display: flex; }
+    .viewer-panel {
+      position: relative; width: min(100%, 1120px); max-height: 100%;
+      background: rgba(8, 17, 34, 0.98); border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 0; overflow: hidden; box-shadow: 0 40px 120px rgba(0,0,0,0.45);
+    }
+    .viewer-backdrop { position: absolute; inset: 0; cursor: zoom-out; }
+    .viewer-content {
+      position: relative; padding: 22px; display: grid; place-items: center;
+      min-height: calc(100vh - 140px);
+    }
+    .viewer-media { max-width: 100%; max-height: 100%; transition: none; }
+    .viewer-media > img, .viewer-media > video, .viewer-media > iframe {
+      max-width: 100%; max-height: 100%; width: auto; height: auto;
+      object-fit: contain; border-radius: 0;
+      transform-origin: center center;
+      transition: transform 0.2s ease;
+    }
+    .viewer-close {
+      position: absolute; top: 14px; right: 14px; border: none;
+      background: rgba(255,255,255,0.08); color: var(--text);
+      width: 38px; height: 38px; border-radius: 0; cursor: pointer;
+      font-size: 22px; line-height: 1;
+    }
+
+    .placeholder {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 10px; width: 100%; height: 100%; color: var(--muted);
+    }
+    .placeholder svg { opacity: 0.42; }
+    .placeholder-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.45; }
+
+    .card-body { padding: 22px 24px 24px; }
+    .card-title {
+      font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: 18px; color: var(--text); margin-bottom: 8px;
+    }
+    .card-desc { font-size: 13px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12); color: var(--text); background: rgba(255, 255, 255, 0.06);
+    }
+    .empty-state {
+      grid-column: 1/-1; text-align: center; padding: 80px 0;
+      color: var(--muted); font-size: 14px; display: none;
+    }
+    .empty-state.visible { display: block; }
+
+    .footer-wrap { border-top: 1px solid var(--border); }
+    footer {
+      max-width: 1100px; margin: 0 auto; padding: 32px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-name { font-family: 'Cinzel', serif; font-size: 14px; color: var(--muted); }
+    .footer-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-link:hover { color: var(--text); }
+
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px) {
+      nav, footer { padding-left: 24px; padding-right: 24px; }
+      .hero, .section { padding-left: 24px; padding-right: 24px; }
+      .grid { grid-template-columns: 1fr; }
+      .games-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .viewer-panel { width: 100%; border-radius: 0; }
+      .viewer-content { min-height: calc(100vh - 120px); padding: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .card, a.game-card { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="star-field" aria-hidden="true"></div>
+  <div class="media-viewer" id="mediaViewer" aria-hidden="true">
+    <div class="viewer-backdrop" data-close></div>
+    <div class="viewer-panel" role="dialog" aria-modal="true">
+      <div class="viewer-content">
+        <div class="viewer-media" id="viewerMedia"></div>
+      </div>
+    </div>
+  </div>
+  <div class="page-content">
+
+    <nav>
+      <a href="#" class="nav-name">Onnett</a>
+      <div style="display:inline-flex; gap: 10px; align-items:center;">
+        <a href="https://www.roblox.com/users/555464400/profile" target="_blank" rel="noopener" class="nav-roblox">
+          <span class="roblox-icon" aria-hidden="true">
+            <img class="roblox-headshot" alt="Roblox profile headshot" />
+          </span>
+          <span>Roblox Profile ↗</span>
+        </a>
+        <span class="nav-discord">
+          <span class="discord-icon" aria-hidden="true">
+            <img src="assets/icons/discord_logo.png" alt="Discord" />
+          </span>
+          <span>onnett.</span>
+        </span>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <p class="hero-eyebrow">Roblox Developer</p>
+      <h1 class="hero-name">Onnett</h1>
+      <img class="hero-line" src="assets/deco/whiteline.png" alt="" aria-hidden="true" />
+      <p class="hero-sub">I'm NOT the owner of Bee Swarm Simulator! (Name change soon)</p>
+    </header>
+
+    <section class="section" style="padding: 0 40px 32px;">
+      <div class="section-header">
+        <p class="section-label">Activity</p>
+        <div class="section-line"></div>
+      </div>
+      <div class="games-row" id="gamesRow"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="section-label">Works</p>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn" data-tag="Programming">Programming</button>
+        <button class="filter-btn" data-tag="Modeling">Modeling</button>
+        <button class="filter-btn" data-tag="UI/UX">UI/UX</button>
+        <button class="filter-btn" data-tag="Building">Building</button>
+        <button class="filter-btn" data-tag="Animation">Animation</button>
+        <button class="filter-btn" data-tag="VFX">VFX</button>
+        <button class="filter-btn" data-tag="GFX">GFX</button>
+        <button class="filter-btn" data-tag="Rigging">Rigging</button>
+        <button class="clear-btn" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="grid" id="grid">
+
+        <div class="card" data-tags="Animation,Programming,UI/UX,GFX,Building,Modeling">
+          <div class="card-media">
+            <iframe src="https://www.youtube.com/embed/gKYrwfVq3-c" title="Unseenia: Menu & Character Creation" allowfullscreen></iframe>
+          </div>
+          <div class="card-body">
+            <p class="card-title">Unseenia: Menu & Character Creation</p>
+            <p class="card-desc">Early test footage of my upcoming game! (Forgot to preload the assets, so they might load slowly here.)</p>
+            <div class="card-tags">
+              <span class="tag">Programming</span>
+              <span class="tag">Animation</span>
+              <span class="tag">UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-tags="Animation,Programming,UI/UX">
+          <div class="card-media">
+            <iframe src="https://www.youtube.com/embed/6VsvF9TDGQU" title="Credits Cutscene Prototype" allowfullscreen></iframe>
+          </div>
+          <div class="card-body">
+            <p class="card-title">Unseenia: Credits Cutscene Prototype</p>
+            <p class="card-desc">Very early draft of a credits cutscene for my upcoming game, but still wanted to feature it here for now. Hopefully you can see the vision.</p>
+            <div class="card-tags">
+              <span class="tag">Programming</span>
+              <span class="tag">Animation</span>
+              <span class="tag">UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-tags="Modeling">
+          <div class="card-media">
+            <img src="assets/works/models_1.png" alt="Modeling project" />
+          </div>
+          <div class="card-body">
+            <p class="card-title">Old Clothing & Weapons</p>
+            <p class="card-desc">Some stuff I created in my early modeling days.</p>
+            <div class="card-tags">
+              <span class="tag">Modeling</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-tags="GFX">
+          <div class="card-media">
+            <img src="assets/works/darkcloverlogos.png" alt="Dark Clover Logos" />
+          </div>
+          <div class="card-body">
+            <p class="card-title">Dark Clover: Asta & Yuno</p>
+            <p class="card-desc">Logos I made in early 2023 for a solo project.</p>
+            <div class="card-tags">
+              <span class="tag">GFX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-tags="Animation,VFX,Programming,Building,Modeling">
+          <div class="card-media">
+            <iframe src="https://www.youtube.com/embed/gGMpzzMXccE" title="YouTube project" allowfullscreen></iframe>
+          </div>
+          <div class="card-body">
+            <p class="card-title">Fallen Saga</p>
+            <p class="card-desc">An early-stage MMORPG project I made solo, many years ago. I then decided to try selling it later on. (Warning: Lower your volume for this one 😭)</p>
+            <div class="card-tags">
+              <span class="tag">Animation</span>
+              <span class="tag">VFX</span>
+              <span class="tag">Programming</span>
+              <span class="tag">Building</span>
+              <span class="tag">Modeling</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-tags="Modeling,Rigging">
+          <div class="card-media">
+            <img src="assets/works/brainrots.png" alt="Brainrot Characters" />
+          </div>
+          <div class="card-body">
+            <p class="card-title">Brainrot Characters</p>
+            <p class="card-desc">Some character rigs I made for a side project!</p>
+            <div class="card-tags">
+              <span class="tag">Modeling</span>
+              <span class="tag">Rigging</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-state" id="emptyState">No works match the selected filters.</div>
+      </div>
+    </section>
+
+    <div class="footer-wrap">
+      <footer>
+        <span class="footer-name">Onnett</span>
+        <a href="https://www.roblox.com/users/555464400/profile" target="_blank" rel="noopener" class="footer-link">Roblox Profile ↗</a>
+      </footer>
+    </div>
+
+  </div>
+
+  <script>
+  const GAMES = [
+  {
+    url:  "https://www.roblox.com/games/81186128195438/Unseenia",
+    role: "Owner & Lead Developer",
+    name: "Unseenia",
+    icon: "assets/icons/unseenia.png",
+  },
+  {
+    url:  "https://www.roblox.com/games/102808657572815/Brainrot-Ball",
+    role: "Owner & Lead Developer",
+    name: "Brainrot Ball",
+    icon: "assets/icons/brainrot-ball.png"
+  },
+  {
+    url:  "https://www.roblox.com/games/120500302070128/EVERWIND",
+    role: "QA Tester",
+    name: "Everwind",
+    icon: "assets/icons/everwind.png",
+    discord: "https://discord.gg/GVd8yNCB"
+  },
+];
+
+   const row = document.getElementById('gamesRow');
+GAMES.forEach(entry => {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:6px;';
+
+  const a = document.createElement('a');
+  a.href = entry.url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.className = 'game-card';
+  if (entry.name === 'Unseenia') a.classList.add('highlight');
+  a.innerHTML = `
+    <div class="game-icon">
+      <img src="${entry.icon}" alt="${entry.name}" />
+    </div>
+    <div>
+      <p class="game-name">${entry.name}</p>
+      <p class="game-role">${entry.role}</p>
+    </div>`;
+  wrap.appendChild(a);
+
+  if (entry.discord) {
+    const d = document.createElement('a');
+    d.href = entry.discord;
+    d.target = '_blank';
+    d.rel = 'noopener';
+   d.style.cssText = 'display:inline-flex;align-items:center;gap:8px;padding:7px 14px;background:#2a2a2e;border:1px solid rgba(255,255,255,0.10);text-decoration:none;font-size:12px;color:#b1b5bf;transition:background 0.2s;';
+   d.onmouseenter = () => { d.style.background = '#333338'; };
+d.onmouseleave = () => { d.style.background = '#2a2a2e'; };
+    d.innerHTML = `<img src="assets/icons/discord_logo.png" style="width:14px;height:14px;object-fit:contain;" alt="" /><span>Join Discord</span>`;
+    wrap.appendChild(d);
+  }
+
+  row.appendChild(wrap);
+});
+
+    const btns   = document.querySelectorAll('.filter-btn');
+    const cards  = document.querySelectorAll('.card[data-tags]');
+    const clrBtn = document.getElementById('clearBtn');
+    const empty  = document.getElementById('emptyState');
+    const active = new Set();
+
+    function filter() {
+      let n = 0;
+      cards.forEach(c => {
+        const show = active.size === 0 || [...active].some(t => c.dataset.tags.split(',').includes(t));
+        c.classList.toggle('is-hidden', !show);
+        if (show) n++;
+      });
+      empty.classList.toggle('visible', n === 0);
+      clrBtn.classList.toggle('visible', active.size > 0);
+    }
+
+    btns.forEach(b => b.addEventListener('click', () => {
+      active.has(b.dataset.tag) ? active.delete(b.dataset.tag) : active.add(b.dataset.tag);
+      b.classList.toggle('active');
+      filter();
+    }));
+
+    clrBtn.addEventListener('click', () => {
+      active.clear();
+      btns.forEach(b => b.classList.remove('active'));
+      filter();
+    });
+
+    const viewer = document.getElementById('mediaViewer');
+    const viewerMedia = document.getElementById('viewerMedia');
+    let viewerContentMedia = null;
+    let currentZoom = 1;
+
+    function setViewerZoom(val) {
+      currentZoom = Math.min(3, Math.max(1, val));
+      if (viewerContentMedia) viewerContentMedia.style.transform = `scale(${currentZoom})`;
+    }
+
+    function openViewer(el) {
+      if (!viewer || !viewerMedia) return;
+      const clone = el.cloneNode(true);
+      clone.removeAttribute('style');
+      clone.style.maxWidth = '100%';
+      clone.style.maxHeight = '100%';
+      clone.style.transform = 'scale(1)';
+      if (clone.tagName === 'VIDEO') {
+        clone.autoplay = true;
+        clone.controls = true;
+        clone.muted = true;
+        clone.playsInline = true;
+      }
+      viewerMedia.innerHTML = '';
+      viewerMedia.appendChild(clone);
+      viewerContentMedia = clone;
+      setViewerZoom(1);
+      viewer.classList.add('active');
+      viewer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeViewer() {
+      if (!viewer) return;
+      viewer.classList.remove('active');
+      viewer.setAttribute('aria-hidden', 'true');
+      if (viewerMedia) viewerMedia.innerHTML = '';
+      viewerContentMedia = null;
+      document.body.style.overflow = '';
+      currentZoom = 1;
+    }
+
+    document.querySelectorAll('.card').forEach(card => {
+      const media = card.querySelector('.card-media img, .card-media video, .card-media iframe');
+      if (!media) return;
+      const mediaFrame = card.querySelector('.card-media');
+      if (!mediaFrame) return;
+
+      mediaFrame.classList.add('media-clickable');
+
+      if (media.tagName === 'VIDEO') {
+        const playButton  = mediaFrame.querySelector('.play-button');
+        const pauseButton = mediaFrame.querySelector('.pause-button');
+        const fsButton    = mediaFrame.querySelector('.fullscreen-button');
+
+        if (playButton) {
+          media.volume = 1;
+
+          if (!media.paused) {
+            playButton.style.opacity = '0';
+            playButton.style.pointerEvents = 'none';
+            if (pauseButton) pauseButton.style.pointerEvents = 'auto';
+            if (fsButton) { fsButton.style.opacity = '1'; fsButton.style.pointerEvents = 'auto'; }
+          } else {
+            playButton.style.opacity = '1';
+            playButton.style.pointerEvents = 'auto';
+            if (pauseButton) pauseButton.style.pointerEvents = 'none';
+            if (fsButton) { fsButton.style.opacity = '0'; fsButton.style.pointerEvents = 'none'; }
+          }
+
+          playButton.addEventListener('click', e => { e.stopPropagation(); media.play(); });
+
+          if (pauseButton) {
+            pauseButton.addEventListener('click', e => { e.stopPropagation(); media.pause(); });
+            mediaFrame.addEventListener('mouseenter', () => {
+              if (!media.paused) { pauseButton.style.opacity = '1'; pauseButton.style.pointerEvents = 'auto'; }
+            });
+            mediaFrame.addEventListener('mouseleave', () => {
+              pauseButton.style.opacity = '0';
+              pauseButton.style.pointerEvents = 'none';
+            });
+          }
+
+          media.addEventListener('play', () => {
+            document.querySelectorAll('.card-media video').forEach(v => { if (v !== media) v.pause(); });
+            media.volume = 1;
+            playButton.style.opacity = '0';
+            playButton.style.pointerEvents = 'none';
+            if (pauseButton) pauseButton.style.pointerEvents = 'auto';
+            if (fsButton) { fsButton.style.opacity = '1'; fsButton.style.pointerEvents = 'auto'; }
+          });
+
+          media.addEventListener('pause', () => {
+            playButton.style.opacity = '1';
+            playButton.style.pointerEvents = 'auto';
+            if (pauseButton) pauseButton.style.pointerEvents = 'none';
+            if (fsButton) { fsButton.style.opacity = '0'; fsButton.style.pointerEvents = 'none'; }
+          });
+        }
+
+        if (fsButton) fsButton.addEventListener('click', e => { e.stopPropagation(); openViewer(media); });
+      }
+
+      if (media.tagName !== 'VIDEO') {
+        mediaFrame.addEventListener('click', () => openViewer(media));
+      }
+    });
+
+    viewer?.addEventListener('click', e => {
+      if (e.target === viewer || (e.target instanceof Element && (e.target.closest('[data-close]') || e.target.closest('.viewer-close')))) {
+        closeViewer();
+      }
+    });
+
+    viewer?.addEventListener('wheel', e => {
+      e.preventDefault();
+      setViewerZoom(currentZoom + (e.deltaY > 0 ? -0.1 : 0.1));
+    }, { passive: false });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeViewer();
+      if (e.key === '+' || e.key === '=') setViewerZoom(currentZoom + 0.2);
+      if (e.key === '-') setViewerZoom(currentZoom - 0.2);
+    });
+
+    function spawnStars() {
+      const field  = document.querySelector('.star-field');
+      const images = ['assets/deco/Star1.png', 'assets/deco/Star2.png'];
+
+      for (let i = 0; i < 7; i++) {
+        const star = document.createElement('div');
+        const size = 14 + Math.round(Math.random() * 18);
+        const floatDistance = 10 + Math.round(Math.random() * 14);
+        const duration = 7 + Math.random() * 4;
+        const delay = Math.random() * -duration;
+        const scaleMin = 0.88 + Math.random() * 0.06;
+        const scaleMax = scaleMin + 0.08 + Math.random() * 0.06;
+
+        const img = document.createElement('img');
+        img.src = images[Math.floor(Math.random() * images.length)];
+        img.alt = '';
+
+        star.className = 'star';
+        star.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*92}%;top:${Math.random()*90}%`;
+        star.style.setProperty('--star-duration', `${duration}s`);
+        star.style.setProperty('--star-delay', `${delay}s`);
+        star.style.setProperty('--star-scale-min', scaleMin);
+        star.style.setProperty('--star-scale-max', scaleMax);
+        star.style.setProperty('--star-float-distance', `${floatDistance}px`);
+        star.style.setProperty('--star-start-rotation', `${Math.random()*360}deg`);
+        star.appendChild(img);
+        field.appendChild(star);
+      }
+    }
+
+    async function loadRobloxAvatar() {
+      const img = document.querySelector('.nav-roblox .roblox-icon img');
+      if (!img) return;
+      try {
+        const res  = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=555464400&size=48x48&format=Png&isCircular=true');
+        const data = await res.json();
+        const url  = data?.data?.[0]?.imageUrl;
+        if (url) img.src = url;
+      } catch(e) {}
+    }
+
+    window.addEventListener('load', () => {
+      spawnStars();
+      loadRobloxAvatar();
+    });
+  </script>
+</body>
+</html>
